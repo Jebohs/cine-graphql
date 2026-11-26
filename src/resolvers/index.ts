@@ -27,7 +27,7 @@ const checkPeliculaExiste = async (peliculaId: ObjectId) =>{
 }
 
 const checkSalaExiste = async (salaId: ObjectId) =>{
-    const collection = getPeliculasCollection();
+    const collection = getSalasCollection();
     const sala = await collection.findOne({_id: salaId});
 
     if(!sala){
