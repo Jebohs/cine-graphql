@@ -1,4 +1,4 @@
-import { ObjectId , type Collection } from "mongodb";
+import { ObjectId } from "mongodb";
 import {GraphQLError } from "graphql";
 
 import {
@@ -11,8 +11,6 @@ import {
 import type {
     PeliculaT, SalaT, SesionT, ButacaT, ReservaT
 } from "../models/types.js"
-import { totalmem } from "node:os";
-
 
 const checkPeliculaExiste = async (peliculaId: ObjectId) =>{
     const collection = getPeliculasCollection();
@@ -116,7 +114,7 @@ export const resolvers = {
         reservasCliente: async (_:unknown , args: {cliente:string}) =>{
             const collection = getReservasCollection();
             return await collection.find({
-                cliente: args.cliente
+                cliente: args.cliente.toLowerCase
             }).toArray();
         }
     },
