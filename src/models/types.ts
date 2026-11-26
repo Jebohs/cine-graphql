@@ -3,7 +3,7 @@ import type { ObjectId } from "mongodb";
 // fields which are missing will be calculated, they do not need to be stored,
 // for example the movie end time can be done with inicio + duracion min.
 
-export type Pelicula = {
+export type PeliculaT = {
         _id?: ObjectId,
         titulo: string,
         duracionMin: number,
@@ -11,14 +11,14 @@ export type Pelicula = {
         genero: string
     }
 
-export type Sala = {
+export type SalaT = {
         _id?: ObjectId,
         nombre: string,
         filas: number,
         butacasPorFila: number,
     }
 
-export type Sesion = {
+export type SesionT = {
         _id?: ObjectId,
         peliculaId: ObjectId,
         salaId: ObjectId,
@@ -27,16 +27,16 @@ export type Sesion = {
         estado: string,
     }
 
-export type Butaca = {
+export type ButacaT = {
         fila: number,
         numero: number
     }
 
-export type Reserva = {
+export type ReservaT = {
         _id?: ObjectId,
         sesionId: ObjectId,
         cliente: string,
-        butacas: Butaca[],
+        butacas: ButacaT[],
         importe: number,
         estado: string,
         creadaEn: string
