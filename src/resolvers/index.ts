@@ -11,6 +11,7 @@ import {
 import type {
     PeliculaT, SalaT, SesionT, ButacaT, ReservaT
 } from "../models/types.js"
+import { totalmem } from "node:os";
 
 
 const checkPeliculaExiste = async (peliculaId: ObjectId) =>{
@@ -83,10 +84,26 @@ export const resolvers = {
                     extensions: {code:  "BAD_UDER_INPUT" }
                 });
             }
-            //todo mongodb filter
             const filter: any = {};
+            if(peliculaId){
+                if (!ObjectId.isValid(peliculaId)) {
+                    throw new GraphQLError("ID de pelicula no valido", {extensions: {code : "BAD_USER_INPUT"}})
+                }
+                filter.peliculaId = new ObjectId(peliculaId);
+            }
+            if(desde){
+                filter.inicio = {$gte:desde}; //greater than equal
+            }
+            if(hasta){
+                filter.inicio = {...filter.inicio, $lte: hasta}; //less than equal
+            }
 
-            return;
+            const totalElementos = await collection.countDocuments(filter); 
+            const totalPaginas = Math.ceil(totalElementos/ limite);
+
+            const datos = await collection.find(filter).sort({inicio: 1}).skip((pagina-1)*limite).limit(limite).toArray();
+
+            return {datos , pagina, limite, totalElementos, totalPaginas}
         },
 
         sesion: async (_: unknown, args: {id: string}) =>{
