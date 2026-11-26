@@ -19,7 +19,7 @@ const checkPeliculaExiste = async (peliculaId: ObjectId) =>{
 
     if(!pelicula){
         throw new GraphQLError("Pelicula no existe",{
-            extensions: {code: "BAD_USER_INPUT"}
+            extensions: {code: "NOT_FOUND"}
         })
     }
     return pelicula;
