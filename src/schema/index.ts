@@ -49,4 +49,12 @@ export const typeDefs = `#graphql
         totalElementos: Int!,
         totalPaginas: Int!
     }
+
+    type Query{
+        #Skeleton to fill out
+    }
+
+    type Mutation {
+        #Skeleton to fill out
+    }
 `
