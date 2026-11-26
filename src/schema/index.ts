@@ -5,8 +5,9 @@ export const typeDefs = `#graphql
         _id: ID!,
         titulo: String!,
         duracionMin: Int!,
-        butacasPorFila: Int!,
-        aforo:Int!
+        edadMinima: Int!,
+        genero:String!,
+        sesiones:[Sesion!]!,
     }
 
     type Sala {
@@ -22,6 +23,7 @@ export const typeDefs = `#graphql
         pelicula: Pelicula!,
         sala: Sala!,
         inicio: String!,
+        fin: String!,
         precio: Int!,
         estado: String!,
         butacasLibres: Int!,
