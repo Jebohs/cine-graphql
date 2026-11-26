@@ -39,7 +39,7 @@ const checkSalaExiste = async (salaId: ObjectId) =>{
 }
 
 const checkSesionExiste = async (SesionId: ObjectId) =>{
-    const collection = getPeliculasCollection();
+    const collection = getSesionesCollection();
     const Sesion = await collection.findOne({_id: SesionId});
 
     if(!Sesion){
