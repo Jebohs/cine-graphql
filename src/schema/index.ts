@@ -54,9 +54,20 @@ export const typeDefs = `#graphql
 
     type Query{
         #Skeleton to fill out
+        peliculas(genero: String): [Pelicula!]!,
+        pelicula(id: ID!): Pelicula,
+        sesiones(peliculaId: ID, desde:String, hasta:String, pagina:Int, limite:Int): PaginaSesiones!
+        sesion(id: ID!):Sesion,
+        reservasCliente(cliente:String!):[Reserva!]!
     }
 
     type Mutation {
         #Skeleton to fill out
+        # crearPelicula
+        # crearSala
+        # crearSesion
+        # cancelarSesion
+        # resedrvar
+        # cancelarReserva
     }
 `
