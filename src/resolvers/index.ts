@@ -120,7 +120,63 @@ export const resolvers = {
     },
 
     Mutation:{
+        crearPelicula: async (_id:unknown , args: {titulo:string,duracionMin:number,edadMinima:number,genero:string})=>{
+            const collection = getPeliculasCollection();
 
+            if(!args.titulo || !args.genero) {
+                throw new GraphQLError("Titulo o genero son obligatorios", {
+                    extensions: {code: "BAD_USER_INPUT"}
+                })
+            }
 
+            if(!Number.isInteger(args.duracionMin) || args.duracionMin <= 0){
+                throw new GraphQLError("duracion minima debe ser un entero, o mayor de 0", {
+                    extensions: {code: "BAD_USER_INPUT"}
+                })
+            }
+
+            const edad = args.edadMinima;
+            if(edad !== 0 && edad !== 7 && edad !== 12 &&  edad !== 16  && edad !== 18){
+                throw new GraphQLError("La edad minima debe ser uno de estos valores: {0,7,12,16,18}",{
+                    extensions: {code: "BAD_USER_INPUT"}
+                })
+            }
+
+            const nuevaPelicula:PeliculaT ={
+                titulo: args.titulo,
+                duracionMin: args.duracionMin,
+                edadMinima: args.edadMinima,
+                genero: args.genero
+            }
+
+            const insertada = await collection.insertOne(nuevaPelicula);
+
+            const nuevaPeliConId = await collection.findOne({
+                _id: insertada.insertedId
+            });
+
+            return nuevaPeliConId;
+        },
+
+        crearSala: async (_id:unknown , args: {nombre:string,filas:number,butacasPorFila:number})=>{
+            const collection = getSalasCollection();
+        },
+
+        crearSesion: async (_id:unknown, args: {peliculaId:string,salaId:string,inicio:string,precio:number}) =>{
+            const collection = getSesionesCollection();
+        },
+
+        cancelarSesion: async (_id:unknown, args: {}) =>{},
+
+        reservar: async (_id:unknown, args: {}) =>{},
+
+        cancelarReserva: async (_id:unknown, args: {}) =>{},
+    },
+
+    //todo RESOLVERS FOR OTHER FIELDS
+    Sala: {
+        aforo: (parent: SalaT) => {
+            return parent.filas * parent.butacasPorFila
+        }
     }
 }
