@@ -130,7 +130,7 @@ export const resolvers = {
             }
 
             if(!Number.isInteger(args.duracionMin) || args.duracionMin <= 0){
-                throw new GraphQLError("duracion minima debe ser un entero, o mayor de 0", {
+                throw new GraphQLError("duracion minima debe ser un entero y mayor de 0", {
                     extensions: {code: "BAD_USER_INPUT"}
                 })
             }
